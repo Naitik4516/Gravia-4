@@ -1,5 +1,8 @@
-./venv
-./.vscode
-./.idea
-./__pycache__
-./static
+/venv
+/.vscode
+/.idea
+/__pycache__
+/static
+otherQuery.txt
+pywhatkit_dbs.txt
+errors.txt
