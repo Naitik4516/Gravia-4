@@ -1,8 +1,9 @@
-./venv
-./.vscode
-./.idea
-./__pycache__
-./static
-./otherQuery.txt
-./pywhatkit_dbs.txt
-./errors.txt
+__pycache__
+static
+/test
+.vscode
+UserData.json
+*.txt
+.env
+.env.local
+PyAudio-0.2.11-cp310-cp310-win_amd64.whl
