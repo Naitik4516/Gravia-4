@@ -1,0 +1,21 @@
+{
+    "user": {
+        "_id": {
+            "$oid": "618e66bcd9907b0badd79fba"
+        },
+        "firstname": "Krishna",
+        "lastname": "Singhal",
+        "phone": "+918218182326",
+        "Date of birth": "11/12/21",
+        "email": "ksinghal026@gmail.com",
+        "couuntry": "India",
+        "address": "",
+        "password": {
+            "$binary": "JDJiJDEyJHlIdXpXdzNrMDJZYnJyODNRVzNYVy4wN1h6TG1kS0c3QXRUVmRoUVZUSHBod2Fqd3VQVzBx",
+            "$type": "00"
+        },
+        "registered on": {
+            "$date": 1636742164549
+        }
+    }
+}

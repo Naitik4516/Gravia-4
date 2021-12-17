@@ -1,9 +1,7 @@
 __pycache__
-static
-/test
 .vscode
 UserData.json
-*.txt
 .env
 .env.local
-PyAudio-0.2.11-cp310-cp310-win_amd64.whl
+*.whl
+*.txt

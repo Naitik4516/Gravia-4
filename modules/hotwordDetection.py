@@ -1,8 +1,22 @@
 import speech_recognition as sr
 from threading import Thread
 
-def listen():
-    print("listening")
+def takeCommand():   
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listening from take command...")
+        audio = r.listen(source)
+
+    try:
+        print("Recognizing.from takeCommand..")    
+        query = r.recognize_google(audio, language='en-in') 
+        print(f"User said: {query}\n") 
+        if "hi" or "hello" in query: print("Hi hello tata bye bye")
+
+    except Exception as e:
+        print("Say that again please")
+        return "None"
+    return query
 
 class Detect:
     def __init__(self, listenfunc) -> None:
@@ -15,14 +29,11 @@ class Detect:
             print("Listening...")
             audio = r.listen(source)
             r.pause_threshold = 0.5
-            r.non_speaking_duration = 0.2
-            r.operation_timeout = 1
-            r.adjust_for_ambient_noise(source,duration=0.8)
         try:
             print("Recognizing...")    
             query = r.recognize_google(audio, language='en-in') 
             print(query)
-            if "gravia" in query:
+            if "gravia" in query or "graveyard" in query:
                 print("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tDetected")
                 listenfunc()
 
@@ -32,4 +43,4 @@ class Detect:
         self.detector(listenfunc)
 
 if __name__ == '__main__':
-    Detect(listen)
+    Detect(listenfunc=takeCommand)

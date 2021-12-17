@@ -151,6 +151,8 @@ class Login_Window():
                     data = json_util.dumps(mydoc,indent=4)
                     with open(f"UserData.json", "w") as otfile:
                         otfile.write(data)
+                    with open(f"login.txt", "w") as lgfile:
+                        lgfile.write("1")
                     self.root.destroy()
                     notification.notify(
                         app_name = "Gravia",
@@ -188,9 +190,9 @@ class Login_Window():
             if len(mylist) == 0:
                 tmsg.showerror("Error","Invalid email id")
             else:
-                # otp_window = Tk()    
-                # otp = generateOTP(otp_window, self.emailEntery.get(), self.emailEntery.get(),self.newPassword)   
-                # otp_window.mainloop()
+                otp_window = Tk()    
+                otp = generateOTP(otp_window, self.emailEntery.get(), self.emailEntery.get(),self.newPassword)   
+                otp_window.mainloop()
                 self.newPassword()
 
         self.frame.place_forget()
@@ -512,7 +514,7 @@ class Signup:
                 "couuntry": c,
                 "address": ad,
                 "password": hashedpassword,
-                "registered on": datetime.now(),
+                "registered on": datetime.utcnow(),
                 "assistant_name": "Gravia"
             }
 

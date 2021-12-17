@@ -1,25 +1,18 @@
 import datetime  # pip install datetime
 import json
 import os  # pip install os
-import random
-import shutil
 import smtplib  # pip install smtplib
 import subprocess  # pip install subprocess         "All moduels install by pip like these so first of install all moduels"
-import sys
 import time
 import webbrowser  # pip install webbrowser
 from urllib.request import urlopen
-import bs4
-import feedparser
 import playsound
 import psutil
 import pyautogui
 import pyjokes
-import pytemperature
-import pyttsx3  # pip install pyttsx3
+# import pytemperature
 import pywhatkit
 import requests
-import shutdown
 import speech_recognition as sr  # pip install speechRecognition
 import speedtest
 import wikipedia  # pip install  wikipedia
@@ -28,10 +21,8 @@ import winshell
 import wolframalpha
 import ctypes
 from bs4 import BeautifulSoup
-from clint.textui import progress
+# from clint.textui import progress
 from gtts import gTTS
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 
 def speak(output):
     toSpeak = gTTS(text=output, lang='hi', slow=False)
@@ -492,8 +483,7 @@ if __name__ == "__main__":
                 current_temperature=y["temp"]
                 current_pressure=y["pressure"]
                 current_humidiy=y["humidity"]
-                current_temperature_celcius=pytemperature.k2c(
-                    current_temperature)
+                # current_temperature_celcius=pytemperature.k2c(current_temperature)
                 z=x["weather"]
                 weather_description=z[0]["description"]
 
@@ -518,7 +508,7 @@ if __name__ == "__main__":
             try:
                 account_sid='ACdf65a010a8f2a92f8d2aeb900397bb59'
                 auth_token='4445ca232dacaf9e7d1c871c520aab19'
-                client=Client(account_sid, auth_token)
+                # client=Client(account_sid, auth_token)
 
                 message=client.messages \
                                 .create(

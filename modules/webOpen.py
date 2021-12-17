@@ -4,7 +4,7 @@ import wikipedia
 
 class webOpen:
     def __init__(self,webquery,statusfunc=None,statusvar=None,speak=None) -> None:
-        self.condition = True
+        self.status = True
         if 'according wikipedia' in webquery or "ask wikipedia about" in webquery:  # if wikipedia found in the webquery then this block will be executed
             statusvar.set("Searching...")
             webquery = webquery.replace("according to wikipedia", "")
@@ -140,13 +140,10 @@ class webOpen:
             print("Opening...")  
 
         else:
-            self.condition = False
+            self.status = False
 
         if statusfunc!=None:
             statusfunc()
-
-    def __str__(self) -> str:
-        return self.condition
 
 if __name__ == '__main__':
     from tkinter import Tk, StringVar

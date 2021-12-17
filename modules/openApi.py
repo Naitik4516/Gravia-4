@@ -10,7 +10,7 @@ class Api:
         geo_requests = requests.get(url)
         
         # Global variables
-        self.condition = "Yes"
+        self.status = "Yes"
         self.geo_data = geo_requests.json()
 
         if "calculate" in query:
@@ -25,7 +25,7 @@ class Api:
                 print("The answer is " + answer)
                 speak("The answer is " + answer)
             except Exception:
-                self.condition = "No"
+                self.status = "No"
 
         elif 'news about' in query:
             query = query.replace("about", '')
@@ -41,6 +41,7 @@ class Api:
 
                 speak("here is today's top news headlines")
                 statusvar.set("Fetching and printing data...")
+                # enginepropfunc("rate", 200)
                 for item in data['articles']:
                     # print(str(i) + '. ' + item['title'] + '\n')
                     # print(item['description'] + '\n')
@@ -50,7 +51,7 @@ class Api:
                     i += 1
             except Exception as e:
                 print(str(e))
-                self.condition = "No"
+                self.status = "No"
      
         elif 'news' in query:
             try:
@@ -70,7 +71,8 @@ class Api:
                     i += 1
             except Exception as e:
                 print(str(e))
-                self.condition = "No"
+                self.status = "No"
+
 
         elif "weather" in query:
             statusvar.set("Forecasting...")
@@ -111,17 +113,17 @@ class Api:
       
         elif 'where i am' in query or 'where we are' in query or 'where i live' in query or 'find my location' in query or 'trace my location' in query:
             speak("Wait i check now")
-            self.statusvar.set("Locating...")
+            statusvar.set("Locating...")
             try:
                 speak(f"You are in {self.geo_data['city']}, {self.geo_data['region_name']}, {self.geo_data['country_name']} on {self.geo_data['latitude']} latitude and {self.geo_data['longitude']} longitude and the time zone is {self.geo_data['time_zone']}")
             except Exception as e:
                 print(e)
                 speak("Sorry, I can't figure out where we are, probably because of a network issue")
-                self.condition = "No"
+                self.status = "No"
         
         elif "location info" in query:
             try:
-                    self.statusvar.set("Locating...")
+                    statusvar.set("Locating...")
                     url = f'https://api.freegeoip.app/json/?apikey={config("FREEGEOAPI_API_KEY")}'
                     geo_requests = requests.get(url)
                     self.geo_data = geo_requests.json()
@@ -130,43 +132,43 @@ class Api:
             except Exception as e:
                 print(e)
                 speak("Sorry, I can't figure out your location info, probably because of a network issue")
-                self.condition = "No"  
+                self.status = "No"  
 
         elif "country code" in query:
-            self.statusvar.set("Locating...")
+            statusvar.set("Locating...")
             try:
                 speak(f"Your country code is {self.geodata['country_code']}")
             except Exception as e:
                 print(e)
                 speak("Sorry, I can't figure out, probably because of a network issue")
-                self.condition = "No"
+                self.status = "No"
         
         elif "zip code" in query:
-            self.statusvar.set("Locating...")
+            statusvar.set("Locating...")
             try:
                 speak(f"Your zip code is {self.geodata['zip_code']}")
             except Exception as e:
                 print(e)
                 speak("Sorry, I can't figure out, probably because of a network issue")
-                self.condition = "No"
+                self.status = "No"
 
         elif "region code" in query or "state code" in query:
-            self.statusvar.set("Locating...")
+            statusvar.set("Locating...")
             try:
                 speak(f"Your regio code code is {self.geodata['region_code']}")
             except Exception as e:
                 print(e)
                 speak("Sorry, I can't figure out, probably because of a network issue")
-                self.condition = "No"
+                self.status = "No"
         
         elif "latitude" in query or "state code" in query:
-            self.statusvar.set("Locating...")
+            statusvar.set("Locating...")
             try:
                 speak(f"{self.geodata['latitude']} latidude\n{self.geodata['longitude']} longitude")
             except Exception as e:
                 print(e)
                 speak("Sorry, I can't figure, probably because of a network issue")
-                self.condition = "No"
+                self.status = "No"
 
         else:
             try:
@@ -177,10 +179,7 @@ class Api:
                 speak(answer)
             except Exception as err:
                 print(err)
-                self.condition = "No"
-    
-    def __str__(self) -> str:
-        return self.condition
+                self.status = "No"
 
 def tc():
     return "Aligarh"

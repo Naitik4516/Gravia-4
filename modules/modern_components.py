@@ -2,6 +2,7 @@ from tkinter import *
 import win32gui
 import win32con
 from ctypes import windll
+from PIL import Image, ImageTk
 
 class CreateModernTitlebar():
         """
@@ -85,7 +86,7 @@ class CreateModernTitlebar():
             self._title_text.pack(side=LEFT,padx=4,pady=3)
             self._title_text.bind("<B1-Motion>",self._drag)
     
-            self._close_btn = Button(self._title_bar,text = '\u2715',bd=0,bg=bg,fg=fg,width=3,font=self.font_style,command=lambda: quit())
+            self._close_btn = Button(self._title_bar,text = '\u2715',bd=0,bg=bg,fg=fg,width=3,font=self.font_style,command=lambda: exit())
             self._close_btn.pack(side=RIGHT,fill=Y)
             self._maximize_btn = Button(self._title_bar,text="🗖",bd=0,bg=bg,fg=fg,width=3,font=self.font_style,command=self._maximize_win)
             self._maximize_btn.pack(side=RIGHT,fill=Y)
@@ -203,14 +204,67 @@ class ModernMenubar:
         self.submenu.overrideredirect(True)
         self.submenu.mainloop()
 
+class EntryWithPlaceholder(Entry):
+    def __init__(self, master=None, placeholder="PLACEHOLDER", color='grey', **kwargs):
+        super().__init__(master, kwargs)
+
+        self.placeholder = placeholder
+        self.placeholder_color = color
+        self.default_fg_color = self['fg']
+
+        self.bind("<FocusIn>", self.foc_in)
+        self.bind("<FocusOut>", self.foc_out)
+
+        self.put_placeholder()
+
+    def put_placeholder(self):
+        self.insert(0, self.placeholder)
+        self['fg'] = self.placeholder_color
+
+    def foc_in(self, *args):
+        if self['fg'] == self.placeholder_color:
+            self.delete('0', 'end')
+            self['fg'] = self.default_fg_color
+
+    def foc_out(self, *args):
+        if not self.get():
+            self.put_placeholder()
+
+class Switch_button(Button):
+    def __init__(self, master, size: tuple[int, int], **kwargs):
+        super().__init__(master, kwargs)
+
+        self.is_on = True
+
+        # Define our switch function
+        def switch(e=None):            
+            # Determine is on or off
+            if self.is_on:
+                self.config(image = off)
+                self.is_on = False
+            else:
+                self.config(image = on)
+                self.is_on = True
+
+        # Binding
+        self.bind("<Button-1>", switch)
+
+        # Define Our Images
+        on_image = Image.open(r"static\Icons\on.png")
+        on_image = on_image.resize(size)
+        on = ImageTk.PhotoImage(on_image)
+
+        off_image = Image.open(r"static\Icons\off.png")
+        off_image = off_image.resize(size)
+        off = ImageTk.PhotoImage(off_image)
+
+        self["image"] = on
+        self["borderwidth"] = 0
+
 if __name__ == '__main__':
-    root = Tk()
-    root.geometry("400x500+100+90")
-    titleBar = CreateModernTitlebar(root,title_text = 'Hello,World!' , bg = "dark blue" , fg = 'white')
-    titleBar.resizeable = True
-    titleBar.packBar()
-    # menu = ModernMenubar(root)
-    # menu.createMenu("File")
-    # menu.add_submenu_button("Yo")
-    # menu.createMenu("Edit")
+    def clicked():
+        print("cliked")
+    root = Tk() 
+    b1 = Switch_button(root, (80, 40), command=clicked)
+    b1.pack()
     root.mainloop()
