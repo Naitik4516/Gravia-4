@@ -5,3 +5,5 @@ UserData.json
 .env.local
 *.whl
 *.txt
+pywhatkit_dbs.txt
+otherQuery.txt
