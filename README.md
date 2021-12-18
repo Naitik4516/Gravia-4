@@ -3,10 +3,29 @@
 
 A virtual destktop assistant created by python
 
+![Logo](https://i.ibb.co/VHFfW8J/Gravia-logos.jpg)
 
 ## Authors
 
 - [@Naitik4516](https://github.com/Naitik4516/)
+
+## Features
+
+- Simple User-friendly Gui 
+- Open and close destktop applications
+- Open websites
+- Play any music 
+- Play or search in youtube
+- Calculate mathematics equations
+- Weather reporting
+- Temperature calculating
+- Real-life News Reporting
+- Login System
+- Answer any question
+- Perform System Tasks i.e. - Calculate system battery, change pc wallpaper, shutdown, restart, logout, sleep, etc.
+- Automate system or browser
+- And have more exciting features and were come me in future
+
 
 
 ## Environment Variables
@@ -28,42 +47,6 @@ To run this project, you will need to add the following environment variables to
 `FREEGEOAPI_API_KEY `
 
 `WOLFRAMALPHA_API_KEY `
-
-![Logo](https://i.ibb.co/VHFfW8J/Gravia-logos.jpg)
-
-
-## License
-
-[MIT](https://github.com/Naitik4516/Gravia/blob/master/LICENSE)
-
-
-## Features
-
-- Simple User-friendly Gui 
-- Open and close destktop applications
-- Open websites
-- Play any music 
-- Play or search in youtube
-- Calculate mathematics equations
-- Weather reporting
-- Temperature calculating
-- Real-life News Reporting
-- Login System
-- Answer any question
-- Perform System Tasks i.e. - Calculate system battery, change pc wallpaper, shutdown, restart, logout, sleep, etc.
-- Automate system or browser
-- And have more exciting features and were come me in future
-
-
-
-## Feedback
-
-If you have any feedback, click on [feedback](https://docs.google.com/forms/d/e/1FAIpQLSdO6pvOdqZBjzc6mvbyJ-KA1Nvv6A7d-OadzKZYsn9rQLKrJw/viewform?usp=sf_link)
-
-
-## Documentation
-
-[Documentation](https://linktodocumentation/this-will-comming-soon)
 
 
 ## Run Locally
@@ -92,3 +75,18 @@ Start the app
   python "Gravia 4.0.py"
 ```
 
+
+
+## Documentation
+
+[Documentation](https://linktodocumentation/this-will-comming-soon)
+
+
+## Feedback
+
+If you have any feedback, click on [feedback](https://docs.google.com/forms/d/e/1FAIpQLSdO6pvOdqZBjzc6mvbyJ-KA1Nvv6A7d-OadzKZYsn9rQLKrJw/viewform?usp=sf_link)
+
+
+## License
+
+[MIT](https://github.com/Naitik4516/Gravia/blob/master/LICENSE)
