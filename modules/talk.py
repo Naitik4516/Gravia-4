@@ -1,6 +1,19 @@
-import datetime, winsound, holidays, webbrowser, pyautogui, pyjokes, os, socket, wikipedia, smtplib
-from modules import birth_day_calculator
+import datetime
+import os
+import smtplib
+import socket
+import webbrowser
+import winsound
+
+import holidays
+import pyautogui
+import pyjokes
+import wikipedia
 from bson import json_util
+from decouple import config
+
+from modules import birth_day_calculator
+
 
 class Talk:
     def __init__(self, query,stausvar, speak) -> None:
@@ -12,6 +25,9 @@ class Talk:
         user_data = open('UserData.json')
         self.user_info = json_util.loads(user_data.read())
         assname = self.user_info["assistant_name"]
+        username = self.user_info["firstname"]
+        useremail = self.user_info["email"]
+        date = datetime.datetime.today()
 
         if 'sound of lion' in query:
             stausvar.set("Playing...")
@@ -27,22 +43,15 @@ class Talk:
             print(time)
 
         elif 'date' in query:
-            strDate = datetime.datetime.now().strftime("%d:%m:%y")
+            strDate = datetime.datetime.now().strftime("%d-%m-%y")
             self.speak(f"Today is {strDate}") 
-            print(f"Date is {strDate}")
 
         elif 'day' in query:
             strDate = datetime.datetime.now().strftime("%A")
             self.speak(f"Today is {strDate}")
 
         elif "What year is it " in query or "what year is going now" in query or "what yer it is" in query:
-            stryear = datetime.datetime.now().strftime("%Y")
-            self.speak(f"{stryear} is going on")
-            print(f"It is going on {stryear}")
-
-        elif "bye" in query:
-            self.speak("Bye. Check Out gravia for more exicting things")
-            exit()
+            self.speak(f"{date.year} is going on")
 
         elif "my ip" in query:
             self.speak(hostName)
@@ -50,11 +59,11 @@ class Talk:
         elif "host" in query or "what is name of my pc" in query or "what is name of my laptop" in query or "what is name of my computer" in query:
             self.speak(hostName)
 
-        elif 'email to Krishna' in query:
+        elif 'email to me' in query:
             try:
                 self.speak("What should I say?")
                 content = self.takeCommand()
-                to = "Enter your email.com"
+                to = useremail
                 self.sendEmail(to, content)
                 self.speak("Email has been sent !")
             except Exception as e:
@@ -117,8 +126,8 @@ class Talk:
             winsound.PlaySound(r"static\sound clips\grandma.wav",winsound.SND_FILENAME)
             self.speak("This is grandma or grandmother's snoring")
 
-        elif 'exit' in query:
-            self.speak("Thanks for giving me your time")
+        elif 'exit' in query or 'bye' in query:
+            self.speak(f"Thanks for giving me your time. See you soon, {username}. Bye")
             exit()
 
         elif "who made you" in query or "who created you" in query:
@@ -154,7 +163,7 @@ class Talk:
             self.speak("Yo, what's up")
 
         elif "i love you" in query:
-            self.speak("I love you too. My dear!")
+            self.speak("I love you too. My dear! " + username)
 
         elif "who are you" in query:
             self.speak("I am your virtual assistant created by Krishna")
@@ -260,9 +269,9 @@ class Talk:
         self.statusvar.set("Emailing in process...")
         server.ehlo()
         server.starttls()
-        server.login('Enter your email.com', 'Krishna 2021')
+        server.login(config("EMAIL_ADDRESS"), config("EMAIL_ADDRESS_PASSWORD"))
         self.statusvar.set("Sending...")
-        server.sendmail('Enter your email.com', to, content)
+        server.sendmail(config("EMAIL_ADDRESS"), to, content)
         server.close()
         self.statusvar.set("Sent!")
 

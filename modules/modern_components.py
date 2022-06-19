@@ -1,8 +1,12 @@
-from tkinter import *
-import win32gui
-import win32con
 from ctypes import windll
+from tkinter import *
+from tkinter import ttk
+
+import win32con
+import win32gui
 from PIL import Image, ImageTk
+from ttkwidgets import AutoHideScrollbar
+
 
 class CreateModernTitlebar():
         """
@@ -261,10 +265,110 @@ class Switch_button(Button):
         self["image"] = on
         self["borderwidth"] = 0
 
+class ScrolledFrame(Frame):
+    def __init__(self, master: Misc, autohide:bool = True, bindwithmousewheel:bool = True, background:str = ..., **kwargs) -> None:
+        """
+        # ScrolledFrame
+        Tkinter frame with scrollbars
+        ## Autohide
+        If you set autohide=True, the scrollbar will automatically hide when it is not needed.
+        ## Bind with mouse wheel
+        If you turn bindwithmousewheel=True, your scroll bar will bind to the mouse wheel.
+        ### Tips
+        If you want to change or modify more you need to modify the canvas to modify the can you need write this syntax - canva.config(`Your options here`)
+
+        """
+        super().__init__(master, kwargs)
+
+        # Create A Main frame
+
+        # self = Frame(master)
+
+        self.config(bd=0,highlightthickness=0)
+        # Create Frame for X Scrollbar
+
+        sec = Frame(self)
+
+        sec.pack(fill=X, side=BOTTOM)
+
+        # Create A Canvas
+
+        self.canvas = Canvas(self, background=background, bd=0, highlightthickness=0)
+
+        self.canvas.pack(side=LEFT, fill=BOTH, expand=1)
+
+        # Add A Scrollbars to Canvas
+
+        if autohide:
+            x_scrollbar = AutoHideScrollbar(
+                sec, orient=HORIZONTAL, command=self.canvas.xview)
+            x_scrollbar.pack(side=BOTTOM, fill=X)
+
+            y_scrollbar = AutoHideScrollbar(
+                self, orient=VERTICAL, command=self.canvas.yview)
+            y_scrollbar.pack(side=RIGHT, fill=Y)
+        else:
+            x_scrollbar = ttk.Scrollbar(
+                sec, orient=HORIZONTAL, command=self.canvas.xview)
+            x_scrollbar.pack(side=BOTTOM, fill=X)
+
+            y_scrollbar = ttk.Scrollbar(
+                self, orient=VERTICAL, command=self.canvas.yview)
+            y_scrollbar.pack(side=RIGHT, fill=Y)
+
+        # Configure the canvas
+
+        self.canvas.configure(xscrollcommand=x_scrollbar.set)
+
+        self.canvas.configure(yscrollcommand=y_scrollbar.set)
+
+        self.canvas.bind("<Configure>", lambda e: self.canvas.config(
+            scrollregion=self.canvas.bbox(ALL)))
+
+        # Create Another Frame INSIDE the Canvas
+
+        self.interior = Frame(self.canvas, background=background, bd=0, highlightthickness=0)
+    
+        # Add that New Frame a Window In The Canvas
+
+        self.canvas.create_window((0, 0), window=self.interior, anchor="nw")
+
+        # Binding with mousewheel
+        if bindwithmousewheel:
+            self.canvas.bind_all("<MouseWheel>", self._on_mousewheel)
+
+    def _on_mousewheel(self, event):
+        self.canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+
 if __name__ == '__main__':
     def clicked():
         print("cliked")
     root = Tk() 
-    b1 = Switch_button(root, (80, 40), command=clicked)
-    b1.pack()
+    content = """Gravia is open source project creted by Naitik Singhal in 2021.
+Naitik Singhal (Krishna) was born on 2 february 2009.
+He is a very smart and intelligent boy because he creates a `Gravia` a virtual assistant which can do - 
+    • Simple User-friendly Gui
+    • Open and close destktop applications
+    • Open websites
+    • Play any music
+    • Play or search in youtube
+    • Calculate mathematics equations
+    • Weather reporting
+    • Temperature calculating
+    • Real-life News Reporting
+    • Login System
+    • Answer any question
+    • Perform System Tasks i.e. - Calculate system battery, change pc wallpaper, shutdown, restart, logout, sleep, etc.
+    • Automate system or browser
+    • And have more exciting features and were come me in future
+          """
+    b1 = ScrolledFrame(root, background="navy blue", borderwidth=0, highlightthickness=0,)
+    b1.interior.config(padx=10)
+    sub_title = Label(b1.interior, text="Gravia 4.1", bg="navy blue", fg="white", font="lucida 12 bold")
+    sub_title.pack()
+    contentLabel = Text(b1.interior, bg="navy blue", fg="white", font="lucida 10", borderwidth=0)
+    contentLabel.insert(INSERT, content)
+    contentLabel.config(state="disabled")
+    contentLabel.pack()
+    b1.pack(fill=BOTH, expand=1)
     root.mainloop()

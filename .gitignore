@@ -2,6 +2,8 @@ __pycache__
 .vscode
 UserData.json
 .env
-.env.local
 *.whl
 *.txt
+0110110001101111011001110110100101101110.bin
+test
+setup helper.py

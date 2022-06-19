@@ -2,10 +2,11 @@ import winshell
 import ctypes
 import speedtest
 import psutil
-from os import system
+from os import system, environ
 import subprocess
 
 class Tasks:
+    WINDIR = environ['windir']
     def __init__(self, query, statusvar, speak) -> None:
         self.status,self.statusvar = True, statusvar
 
@@ -14,7 +15,7 @@ class Tasks:
             try:
                 ctypes.windll.user32.SystemParametersInfoW(20,
                                                         0,
-                                                        "C:\\Windows\\WinSxS\\amd64_microsoft-windows-shell-wallpaper-theme1_31bf3856ad364e35_10.0.18362.1_none_a937730822266138",
+                                                        f"{self.WINDIR}\\WinSxS\\amd64_microsoft-windows-shell-wallpaper-theme1_31bf3856ad364e35_10.0.18362.1_none_a937730822266138",
                                                         0)
                 speak("Background changed succesfully")
 

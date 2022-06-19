@@ -6,7 +6,7 @@ from tkinter import Button, Tk, Entry, Label
 from tkinter.messagebox import *
 
 class generateOTP:
-    def __init__(self, root, email_address, sendername, callback) -> None:
+    def __init__(self, root, email_address, sendername, callback, subject="OTP") -> None:
         self.callback = callback
         self.root = root
         self.root.title("OTP")
@@ -26,8 +26,8 @@ class generateOTP:
             server = smtplib.SMTP('smtp.gmail.com', 587)
             server.ehlo()
             server.starttls()
-            server.login(config("EMAIL_ADDRESS"), config("PASSWORD"))
-            server.sendmail(email_address, to,  f"Subject: {sub}\n\n{content}")
+            server.login(config("EMAIL_ADDRESS"), config("EMAIL_ADDRESS_PASSWORD"))
+            server.sendmail(config("EMAIL_ADDRESS"), to,  f"Subject: {sub}\n\n{content}")
             server.close()
 
         try:
@@ -41,18 +41,18 @@ class generateOTP:
             Enter it in poped up window and then continue signup process.
             If it is not you don't worry, just ignore it.
             '''
-            to = email_address
-            sendEmail(to,sub,content)
+            sendEmail(email_address,sub,content)
             print("Mail sent!")
-            showinfo("Email Verification", f"A 8 digit code ws sent on {email_address} to verify you.\nEnter yout one time otp in pop up window")
+            showinfo("Email Verification", f"A 8 digit code ws sent on {email_address} to verify you.\nEnter your one time otp in pop up window")
         except Exception as e:
             print(e)
             print("mail not sent")
+            showerror("Mail not sent!","An unexpected error accured! Please contact at devloper2345@gmail.com")
         
     def checkOTP(self):
         answer = self.otp_entry.get()
-        print("Actual otp:",self.otp)
-        print("Entered otp:",answer)
+        # print("Actual otp:",self.otp)
+        # print("Entered otp:",answer)
         if answer.isalnum and len(answer) == 8:
             if int(answer) == self.otp:
                 print("OTP match succesfully")
@@ -79,6 +79,6 @@ if __name__ == '__main__':
     root.geometry("230x100")
     # window = Tk()
     # window.geometry("230x100")
-    generateOTP(root,"devloper2345@gmail.com", "Krishna")
+    generateOTP(root,"devloper2345@gmail.com", "Krishna", lambda: print("Succesfully logged in"))
     # window.mainloop()
     root.mainloop()
