@@ -161,8 +161,8 @@ class gravia:
         self.engine.setProperty('rate', 170)
 
         # Thread(target=self.reminders).start()
-        # Thread(target=self.welcome_notification()).start()
-        # Thread(target=self.wishMe()).start()
+        Thread(target=self.welcome_notification()).start()
+        Thread(target=self.wishMe()).start()
 
     def displayOutput(self,audio, wordwrap=True):
         list = ["ok", "hey", "gravy", 'gravia']
@@ -214,7 +214,7 @@ class gravia:
         import requests
         sleep(1.5)
         try:
-            r = requests.get("https://www.google.com")
+            r = requests.get("https://technomaster.vercel.app/")
             self.statusvar.set("Online")
         except Exception: 
             showwarning("No Internet", "Looks like you have no internet connection please kindly try to connect internet, otherwise some features may not work")
