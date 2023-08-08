@@ -1,7 +1,12 @@
-
 # Gravia
 
-A virtual destktop assistant created by python
+A virtual desktop assistant created by python
+
+### Warning
+- **It is now unmaintained** Check out [Gravia 5.0](https://github.com/Naitik4516/Gravia-5) for the latest version of Gravia
+- This project is only for educational purpose
+- If you are using this project for your own purpose then you have to change the api keys and password in the code
+
 
 ![Logo](https://i.ibb.co/VHFfW8J/Gravia-logos.jpg)
 
@@ -12,7 +17,7 @@ A virtual destktop assistant created by python
 ## Features
 
 - Simple User-friendly Gui 
-- Open and close destktop applications
+- Open and close desktop applications
 - Open websites
 - Play any music 
 - Play or search in youtube
@@ -66,13 +71,13 @@ Go to the project directory
 Install dependencies
 
 ```bash
-  pip install -r requirment.txt
+  pip install -r requirements.txt
 ```
 
 Start the app
 
 ```bash
-  python "Gravia 4.0.py"
+  python "Gravia 4.1.py"
 ```
 
 
