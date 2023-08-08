@@ -94,4 +94,4 @@ If you have any feedback, click on [feedback](https://docs.google.com/forms/d/e/
 
 ## License
 
-[MIT](https://github.com/Naitik4516/Gravia/blob/master/LICENSE)
+[GNU GPLv3](https://github.com/Naitik4516/Gravia/blob/master/LICENSE)
