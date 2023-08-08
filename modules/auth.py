@@ -1,6 +1,4 @@
 from threading import Thread
-from tkinter import tix
-from threading import Thread
 try:
     from otp import generateOTP
     import validator
@@ -21,7 +19,6 @@ from tkinter import messagebox as tmsg
 from tkinter import *
 import decouple
 import os
-print("Starting...")
 
 # Krishna@Gravia#2022
 
@@ -32,9 +29,62 @@ DATABASE = "Gravia"
 COLLECTION = "users"
 
 def main():
-    win = tix.Tk()
+    win = Tk()
     Login_Window(win)
     win.mainloop()
+
+class ToolTip(object):
+    """
+    create a tooltip for a given widget
+    """
+    def __init__(self, widget, msg='widget info'):
+        self.waittime = 500     #miliseconds
+        self.wraplength = 180   #pixels
+        self.widget = widget
+        self.text = msg
+        self.widget.bind("<Enter>", self.enter)
+        self.widget.bind("<Leave>", self.leave)
+        self.widget.bind("<ButtonPress>", self.leave)
+        self.id = None
+        self.tw = None
+
+    def enter(self, event=None):
+        self.schedule()
+
+    def leave(self, event=None):
+        self.unschedule()
+        self.hidetip()
+
+    def schedule(self):
+        self.unschedule()
+        self.id = self.widget.after(self.waittime, self.showtip)
+
+    def unschedule(self):
+        id = self.id
+        self.id = None
+        if id:
+            self.widget.after_cancel(id)
+
+    def showtip(self, event=None):
+        x = y = 0
+        x, y, cx, cy = self.widget.bbox("insert")
+        x += self.widget.winfo_rootx() + 25
+        y += self.widget.winfo_rooty() + 20
+        # creates a toplevel window
+        self.tw = Toplevel(self.widget)
+        # Leaves only the label and removes the app window
+        self.tw.wm_overrideredirect(True)
+        self.tw.wm_geometry("+%d+%d" % (x, y))
+        label = Label(self.tw, text=self.text, justify='left',
+                       background="#ffffff", relief='solid', borderwidth=1,
+                       wraplength = self.wraplength)
+        label.pack(ipadx=1)
+
+    def hidetip(self):
+        tw = self.tw
+        self.tw= None
+        if tw:
+            tw.destroy()
 
 class Login_Window():
     def __init__(self, root) -> None:
@@ -51,10 +101,6 @@ class Login_Window():
         self.myclient = pymongo.MongoClient(decouple.config("DATABASE_URI"))
         self.mydb = self.myclient[DATABASE]
         self.mycol = self.mydb[COLLECTION]
-
-        self.tooltip = tix.Balloon(self.root)
-        for sub in self.tooltip.subwidgets_all():
-            sub.config(bg="white")
 
         # Background image
         self.bg = ImageTk.PhotoImage(file = STATIC_DIR + "backgrounds\\0.jpg")
@@ -105,16 +151,16 @@ class Login_Window():
             def hide():
                 self.textpass.config(show="•")
                 self.show_button.config(image=self.show_image, command=show)
-                self.tooltip.bind_widget(self.show_button, msg="Hide")
+                ToolTip(self.show_button, msg="Hide")
 
             self.textpass.config(show="")
             self.show_button.config(image=self.hide_image, command=hide)
-            self.tooltip.bind_widget(self.show_button, msg="Hide")
+            ToolTip(self.show_button, msg="Hide")
 
         self.show_button = Button(self.frame, text="show Button", image=self.show_image, borderwidth=0, command=show)
         self.show_image.image = self.show_image
         self.show_button.place(x=275,y=280)
-        self.tooltip.bind_widget(self.show_button, msg="Show")
+        ToolTip(self.show_button, msg="Show")
 
         loginbtn = Button(self.frame,text="Login",font=("Helvetica",12,"bold"),cursor="hand2",bg="red",fg="white",bd=3,relief=SUNKEN,activebackground="red",activeforeground="white",command=lambda : self.login(event=None))
         loginbtn.place(x=200,y=340,width=100)
@@ -291,10 +337,6 @@ class Signup:
         # self.root.iconbitmap(PhotoImage(r"static\app icon.ico"))
         # self.root.wm_overrideredirect(True)
 
-        self.tooltip = tix.Balloon(self.root)
-        for sub in self.tooltip.subwidgets_all():
-            sub.config(bg="white")
-
         # Text variables
         self.firstname = StringVar()
         self.lastname = StringVar()
@@ -401,19 +443,19 @@ class Signup:
                 password_entry.config(show="•")
                 confirm_password_entry.config(show="•")
                 self.show_button.config(image=self.show_image, command=show)
-                self.tooltip.bind_widget(self.show_button, msg="Show")
+                ToolTip(self.show_button, msg="Show")
 
             password_entry.config(show="")
             confirm_password_entry.config(show="")
             self.show_button.config(image=self.hide_image, command=hide)
-            self.tooltip.bind_widget(self.show_button, msg="Hide")
+            ToolTip(self.show_button, msg="Hide")
 
         self.show_button = Button(
             frame, text="show Button", image=self.show_image, bd=0, command=show
         )
         self.show_image.image = self.show_image
         self.show_button.place(x=780, y=390)
-        self.tooltip.bind_widget(self.show_button, msg="Show")
+        ToolTip(self.show_button, msg="Show")
 
         termsandconditions = Checkbutton(
             frame,

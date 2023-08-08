@@ -4,5 +4,10 @@ UserData.json
 .env
 *.whl
 0110110001101111011001110110100101101110.bin
-test
+test/*
+build/*
+dist/*
+*.spec
+*.pyc
+
 setup helper.py

@@ -6,7 +6,6 @@ class AutoMate:
         self.status = True
 
         if 'wi-fi' in self.query:
-            print("Aa")
             pyautogui.click(x=1680, y=1100)
 
         elif 'messages' in self.query or 'show menu bar' in self.query:

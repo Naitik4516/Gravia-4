@@ -6,7 +6,6 @@ import os
 import random
 import winsound
 from textwrap import wrap
-from tkinter import tix
 from tkinter.messagebox import *
 from threading import Thread
 from time import sleep
@@ -36,7 +35,7 @@ def main():
         ld = logedin.read()
         ld = int(ld)
         if ld == 0:
-            win = tix.Tk()
+            win = Tk()
             app = auth.Login_Window(win)
             win.mainloop()
             if app.logedinVar.get() == "Yes":
@@ -145,8 +144,8 @@ class gravia:
         self.Ibox.bind("<Key>", lambda e: Thread(target=self.swap_button).start())
         self.Ibox.bind("<Return>", self.send_through_Ibox)
 
-        img1 = Image.open("static\Icons\Mic.png")
-        img1 = img1.resize((30,30),Image.ANTIALIAS)
+        img1 = Image.open(r"static\Icons\Mic.png")
+        img1 = img1.resize((30,30),Image.LANCZOS)
         self.micImage = ImageTk.PhotoImage(img1)
         self.listenButton = Button(bFrame, state="normal", image=self.micImage, borderwidth=0, bg="white", disabledforeground="black", command=lambda: Thread(target=self.makeTrue).start())
         # self.listenButton.bind("<Double-Button>",)
